@@ -1,0 +1,15 @@
+# Keep credentials, operational state, and personalized notebooks out of Git.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.local.*
+config.local.json
+.oci/
+checkpoints/
+runtime/
+.ipynb_checkpoints/
+__pycache__/
