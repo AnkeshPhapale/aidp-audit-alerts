@@ -6,7 +6,7 @@ AIDP job; the schedule interval can change without rebuilding the wheel.
 
 ## Files
 
-- [Wheel 0.4.0](wheels/aidp_audit_alerts-0.4.0-py3-none-any.whl)
+- [Wheel 0.4.1](wheels/aidp_audit_alerts-0.4.1-py3-none-any.whl)
 - [Sample notebook](notebooks/AIDP_Critical_Alerts_Sample.ipynb)
 - [SHA-256 checksum](SHA256SUMS)
 
@@ -30,7 +30,7 @@ For notebook installation, use your environment's supported cluster-library
 installation mechanism or a kernel-readable wheel path:
 
 ```python
-%pip install "/path/to/aidp_audit_alerts-0.4.0-py3-none-any.whl"
+%pip install "/path/to/aidp_audit_alerts-0.4.1-py3-none-any.whl"
 ```
 
 The default Resend test sender only permits the account owner's recipient email.
@@ -84,12 +84,24 @@ delivery, and the implementation does not promise exactly-once delivery.
 
 ## Validation
 
-Release 0.4.0 passed 301 offline tests, including hourly restart/catch-up boundaries,
-event-ID deduplication, outbox persistence, delivery failures and notebook execution
-with mocked source/HTTP. The built wheel and full notebook were also exercised
-together in an isolated Python process. Environment-specific deployment checks
-remain necessary; these tests do not certify a customer's workspace mount or
-actual provider delivery.
+Release 0.4.1 passed 304 offline tests, including hourly restart/catch-up,
+event-ID deduplication, outbox persistence, delivery failures and notebook
+execution with mocked source/HTTP. An isolated Python process imported the
+built wheel and exercised the real audit reader with mocked HTTP.
+
+The deployed audit API returned a row 1.714749 seconds beyond the requested
+end time. The reader now keeps only rows inside the exact inclusive UTC window,
+reads every continuation page, and warns with excluded/scanned counts. Every
+returned row still counts against the event bound. Invalid timestamps, malformed
+pages, failed pagination and exceeded bounds remain errors. The runner retains
+its independent window validation. A newer excluded row can be collected in a
+later invocation when it falls within the requested window.
+
+When upgrading, install wheel 0.4.1, restart the notebook Python session, and
+rerun the same code with the same configuration and checkpoint. No checkpoint
+reset is required. Environment-specific deployment checks remain necessary;
+offline tests cannot certify source completeness, workspace persistence, or
+actual provider delivery. Compare known events against the AIDP Audit Logs UI.
 
 ## References
 
