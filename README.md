@@ -8,11 +8,14 @@ AIDP job; the schedule interval can change without rebuilding the wheel.
 
 - [Wheel 0.4.1](wheels/aidp_audit_alerts-0.4.1-py3-none-any.whl)
 - [Sample notebook](notebooks/AIDP_Critical_Alerts_Sample.ipynb)
+- [Illustrated blog for release 0.4.1](docs/AIDP_Audit_Alerts_Blog_Illustrated.docx)
 - [SHA-256 checksum](SHA256SUMS)
 
 ## Setup
 
-1. Download the wheel and install it on the monitoring cluster. Python 3.10+ is
+1. Use a dedicated monitoring cluster with the minimum supported configuration
+   needed to run the notebook. Attach the Admin persona so the administrator has
+   access. Download the wheel and install it on this cluster. Python 3.10+ is
    required. Restart the notebook kernel after replacing an older package.
 2. Import the sample notebook. Configure recipient and Resend API key in Cell 1;
    a managed `RESEND_API_KEY` environment variable is also supported.
@@ -23,8 +26,10 @@ AIDP job; the schedule interval can change without rebuilding the wheel.
 5. Run once and verify real audit visibility, checkpoint writes and email delivery.
    Run again to confirm accepted events are skipped. Verify the checkpoint folder
    survives cluster replacement before relying on scheduled execution.
-6. Add the notebook to an AIDP job running at your desired interval, with one
-   active run and independent failure/staleness notifications.
+6. Add the notebook to an AIDP workflow/job, select this monitoring cluster and
+   schedule it every hour, with one active run and independent failure/staleness
+   notifications. Ensure the execution identity can use the cluster and read the
+   required audit records. Change the interval later if needed.
 
 For notebook installation, use your environment's supported cluster-library
 installation mechanism or a kernel-readable wheel path:
