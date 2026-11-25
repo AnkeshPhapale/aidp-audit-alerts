@@ -8,7 +8,6 @@ AIDP job; the schedule interval can change without rebuilding the wheel.
 
 - [Wheel 0.4.1](wheels/aidp_audit_alerts-0.4.1-py3-none-any.whl)
 - [Sample notebook](notebooks/AIDP_Critical_Alerts_Sample.ipynb)
-- [Illustrated blog for release 0.4.1](docs/AIDP_Audit_Alerts_Blog_Illustrated.docx)
 - [SHA-256 checksum](SHA256SUMS)
 
 ## Setup
